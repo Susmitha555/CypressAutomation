@@ -1,0 +1,24 @@
+{
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "cypress": "^15.18.1",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "cypress-parallel": "^0.15.0",
+    "cypress-xpath": "^2.0.1"
+  },
+  
+  
+  "scripts": {
+
+    "cy:ui":"cypress run --spec cypress/e2e/UI/**/*.cy.js --env REPORT_FOLDER=ui",
+
+    "cy:smoke":"cypress run --spec cypress/e2e/Smoke/**/*.cy.js --env REPORT_FOLDER=smoke",
+
+    "cy:parallel":"concurrently \"npm run cy:ui\" \"npm run cy:smoke\"",
+
+    "merge":"mochawesome-merge cypress/reports/ui/*.json cypress/reports/smoke/*.json > cypress/reports/merged/output.json",
+
+    "html":"marge cypress/reports/merged/output.json -f FinalReport -o cypress/reports/final"
+  }
+
+}

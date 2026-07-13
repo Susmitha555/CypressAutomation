@@ -1,0 +1,10 @@
+{
+    "url":"https://testautomationpractice.blogspot.com/",
+    "name":"Susmitha",
+    "email":"susmitha@gmail.com",
+    "phone":"7338935415",
+    "address":{
+       "doorNo":203,
+       "LandMark":"Hazel Apart ment Avadi"
+    }
+}
