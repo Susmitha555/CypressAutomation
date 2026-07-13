@@ -19,12 +19,12 @@ const folder = process.env.REPORT_FOLDER || "default";
 module.exports = defineConfig({
   allowCypressEnv: false,
   reporter: "cypress-mochawesome-reporter",
-  
+
   reporterOptions: {
-   // reportDir: `cypress/reports/Test${getTimeStamp()}`,
-  // reportDir: "cypress/reports",
-     reportDir:`cypress/reports/${folder}`,
-     charts: true,
+    // reportDir: `cypress/reports/Test${getTimeStamp()}`,
+    reportDir: "cypress/reports",
+    //reportDir:`cypress/reports/${folder}`,
+    charts: true,
     reportPageTitle: "Cypress Test Report",
     embeddedScreenshots: true,
     inlineAssets: true,
@@ -32,7 +32,7 @@ module.exports = defineConfig({
   },
 
   e2e: {
-   
+
     setupNodeEvents(on, config) {
       // implement node event listeners here
       require("cypress-mochawesome-reporter/plugin")(on);
