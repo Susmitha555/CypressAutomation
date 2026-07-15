@@ -1,5 +1,7 @@
 const { defineConfig } = require("cypress");
 const folder = process.env.REPORT_FOLDER || "default";
+const mysql = require("mysql2");
+const XLSX=require("xlsx");
 
 // function getTimeStamp(){
 // let d=new Date();
@@ -36,10 +38,54 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
       require("cypress-mochawesome-reporter/plugin")(on);
-      return config;
+
+      on("task", {
+        queryDb(query) {
+          const connection = mysql.createConnection({
+            host: '127.0.0.1',
+             port: 3306,
+             user: 'root',
+             database: 'cypressdb'
+
+          });
+
+      return new Promise((resolve, reject) => {
+
+        connection.query(query, (err, results) => {
+          if (err) {
+            reject(err);
+          }
+          else {
+            connection.end();
+            resolve(results);
+          }
+        });
+
+      });
+
+
+    }
+    
+  })
+  
+  on("task",{
+      readExcel(fileName){
+          const workbook=XLSX.readFile("C:/Users/HP/Documents/CypressLearning/cypress/fixtures/Testdata.xlsx");
+          console.log(workbook.SheetNames);
+          const worksheet=workbook.Sheets["sheet1"];
+          console.log(XLSX.utils.sheet_to_json(worksheet));
+          return XLSX.utils.sheet_to_json(worksheet);
+      }  
+
+       
+
+    });
+
+
+return config;
     },
   },
-  video: true,
+video: true,
   screenshotOnRunFailure: true
 });
 
